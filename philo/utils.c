@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 18:27:23 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/27 17:07:53 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	prn_action(int id, int action, t_rule *rule)
 {
 	long long	current;
 
+	if (rule->died && action != DIED)
+		return ;
 	current = getcurrent() - rule->start_time;
 	if (action == TAKE_FORK)
 		printf("%lld %d %s\n", current, id + 1, "has taken a fork");
@@ -72,12 +74,12 @@ void	prn_action(int id, int action, t_rule *rule)
 	return ;
 }
 
-void	precise_sleep(int duration)
+void	precise_sleep(int duration, t_rule *rule)
 {
-	long long start;
+	long long	start;
 
 	start = getcurrent();
-	while (getcurrent() - start < duration)
+	while (!rule->died && getcurrent() - start < duration)
 		usleep(10);
 	return ;
 }

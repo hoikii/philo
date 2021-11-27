@@ -6,13 +6,14 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:03:58 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 17:51:35 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/27 17:05:21 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "philo.h"
 #include <sys/time.h>
+#include <stdlib.h>
 
 int	prn_error(int err)
 {
@@ -58,9 +59,8 @@ int	main(int ac, char **av)
 
 	if (chk_args(ac, av, &rule) == FAIL)
 		return (1);
-	printf("hello\n");
-
 	if (init(&rule) == FAIL)
 		return (prn_error(3));
+	simulate(&rule);
 	return (0);
 }
