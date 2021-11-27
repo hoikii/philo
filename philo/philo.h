@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 17:41:01 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/27 18:45:59 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ enum e_errmsgs {
 };
 
 enum e_action_msg {
+	TAKE_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
@@ -33,6 +34,9 @@ enum e_action_msg {
 
 typedef struct s_philo {
 	int				id;
+	int				fork1;
+	int				fork2;
+	long long		last_meal;
 	struct s_rule	*rule;
 }	t_philo;
 
@@ -53,5 +57,6 @@ int			prn_error(int err);
 int			ft_atoi(const char *str);
 long long	getcurrent(void);
 void		prn_action(int id, int action, t_rule *rule);
+void		precise_sleep(int duration);
 
 #endif

@@ -6,13 +6,14 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 17:54:56 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/27 18:27:23 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include <sys/time.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "philo.h"
 
 static int	is_space(char ch)
@@ -58,7 +59,25 @@ void	prn_action(int id, int action, t_rule *rule)
 	long long	current;
 
 	current = getcurrent() - rule->start_time;
-	if (action == SLEEPING)
+	if (action == TAKE_FORK)
+		printf("%lld %d %s\n", current, id + 1, "has taken a fork");
+	else if (action == EATING)
+		printf("%lld %d %s\n", current, id + 1, "is eating");
+	else if (action == SLEEPING)
 		printf("%lld %d %s\n", current, id + 1, "is sleeping");
+	else if (action == THINKING)
+		printf("%lld %d %s\n", current, id + 1, "is thinking");
+	else if (action == DIED)
+		printf("%lld %d %s\n", current, id + 1, "died");
+	return ;
+}
+
+void	precise_sleep(int duration)
+{
+	long long start;
+
+	start = getcurrent();
+	while (getcurrent() - start < duration)
+		usleep(10);
 	return ;
 }
