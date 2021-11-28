@@ -6,19 +6,19 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:03:58 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 17:05:21 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/28 19:31:14 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "philo.h"
-#include <sys/time.h>
 #include <stdlib.h>
+#include <string.h>
+#include "philo.h"
 
 int	prn_error(int err)
 {
 	if (err == WRONG_ARGS)
-		printf("Wrong arguments\n");
+		printf("philo n ms ms ms [n]\n");
 	else if (err == NO_PHILO)
 		printf("There should be at least one philosopher\n");
 	else if (err == NEGATIVE_ARGS)
@@ -27,8 +27,10 @@ int	prn_error(int err)
 		printf("Invalid optional argument\n");
 	else if (err == MALLOC_FAIL)
 		printf("Error while memory allocation\n");
-	else
-		printf("some error\n");
+	else if (err == MUTEX_INIT_FAIL)
+		printf("Error while initializing mutex\n");
+	else if (err == THREAD_CREATE_FAIL)
+		printf("Error while creating thread\n");
 	return (FAIL);
 }
 
@@ -57,10 +59,18 @@ int	main(int ac, char **av)
 {
 	t_rule	rule;
 
+	memset(&rule, 0, sizeof(t_rule));
 	if (chk_args(ac, av, &rule) == FAIL)
 		return (1);
 	if (init(&rule) == FAIL)
-		return (prn_error(3));
-	simulate(&rule);
+	{
+		if (rule.philo)
+			free(rule.philo);
+		if (rule.forks)
+			free(rule.forks);
+		return (1);
+	}
+	if (simulate(&rule) == FAIL)
+		return (1);
 	return (0);
 }

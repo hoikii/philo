@@ -1,13 +1,10 @@
 NAME		= philo
 HEADER		= philo.h
-SRCS		= $(wildcard *.c)
+SRCS		= main.c init.c simulate.c utils.c
 OBJS		= $(SRCS:.c=.o)
 CC			= gcc
-#################################33
-#CFLAGS		= -Wall -Wextra -Werror
-#################################3
-CFLAGS		= -Wall -Wextra
-#LDLIBS		= lpthread
+CFLAGS		= -Wall -Wextra -Werror
+LDLIBS		= -lpthread
 RM			= rm -rf
 
 CCBLUE		= \033[34m
@@ -19,7 +16,7 @@ CCEND		= \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
+	$(CC) $(OBJS) $(CFLAGS) $(LDLIBS) -o $(NAME)
 	@echo "$(CCBLUE_BOLD) >>> make $(NAME) done!  <<< $(CCEND)"
 
 %.o: %.c $(HEADER)

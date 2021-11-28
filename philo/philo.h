@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 17:07:34 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/28 19:39:26 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ enum e_errmsgs {
 	NO_PHILO,
 	NEGATIVE_ARGS,
 	INVALID_OPT_ARG,
-	MALLOC_FAIL
+	MALLOC_FAIL,
+	MUTEX_INIT_FAIL,
+	THREAD_CREATE_FAIL
 };
 
 enum e_action_msg {
@@ -53,9 +55,11 @@ typedef struct s_rule {
 	t_philo			*philo;
 	long long		start_time;
 	int				died;
+	pthread_mutex_t	writing;
 }	t_rule;
 
 int			init(t_rule *rule);
+void		destroy_mutex(t_rule *rule);
 int			simulate(t_rule *rule);
 int			prn_error(int err);
 

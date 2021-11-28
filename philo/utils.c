@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/27 17:07:53 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/28 19:44:20 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,12 @@ void	prn_action(int id, int action, t_rule *rule)
 {
 	long long	current;
 
+	pthread_mutex_lock(&rule->writing);
 	if (rule->died && action != DIED)
+	{
+		pthread_mutex_unlock(&rule->writing);
 		return ;
+	}
 	current = getcurrent() - rule->start_time;
 	if (action == TAKE_FORK)
 		printf("%lld %d %s\n", current, id + 1, "has taken a fork");
@@ -69,8 +73,11 @@ void	prn_action(int id, int action, t_rule *rule)
 		printf("%lld %d %s\n", current, id + 1, "is sleeping");
 	else if (action == THINKING)
 		printf("%lld %d %s\n", current, id + 1, "is thinking");
+	pthread_mutex_unlock(&rule->writing);
+	/*
 	else if (action == DIED)
 		printf("%lld %d %s\n", current, id + 1, "died");
+		*/
 	return ;
 }
 
@@ -80,6 +87,6 @@ void	precise_sleep(int duration, t_rule *rule)
 
 	start = getcurrent();
 	while (!rule->died && getcurrent() - start < duration)
-		usleep(10);
+		usleep(100);
 	return ;
 }
