@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/28 19:50:27 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/28 15:06:11 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ static void	init_philosophers(t_rule *rule)
 
 int	init(t_rule *rule)
 {
-	pthread_t	*threads;
-
 	rule->philo = malloc(sizeof(t_philo) * rule->num);
 	rule->forks = malloc(sizeof(pthread_mutex_t) * rule->num);
 	if (!rule->philo || !rule->forks)

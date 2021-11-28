@@ -20,7 +20,7 @@ $(NAME): $(OBJS)
 	@echo "$(CCBLUE_BOLD) >>> make $(NAME) done!  <<< $(CCEND)"
 
 %.o: %.c $(HEADER)
-	$(CC) -I $(HEADERS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@echo "$(CCBLUE) >>> clean main projects object files. <<< $(CCEND)"

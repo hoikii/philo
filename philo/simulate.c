@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/28 19:39:56 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/11/28 15:06:33 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	monitor(t_rule *rule)
 {
 	int			i;
 	t_philo		philo;
-	long long	current;
 
 	while (!rule->died)
 	{
