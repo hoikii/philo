@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/28 15:06:33 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/01 08:02:59 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 
 #include <stdio.h>
 #include <unistd.h>
+
+static void	eats_counter(t_philo *philo, t_rule *rule)
+{
+	if (philo->eat_cnt < rule->must_eats)
+	{
+		philo->eat_cnt++;
+		if (philo->eat_cnt >= rule->must_eats)
+		{
+			pthread_mutex_lock(&rule->finished_counter_mutex);
+			rule->finished_counter++;
+			pthread_mutex_unlock(&rule->finished_counter_mutex);
+		}
+	}
+}
 
 void	*philo(void *args)
 {
@@ -35,6 +49,7 @@ void	*philo(void *args)
 		philo->last_meal = getcurrent();
 		prn_action(philo->id, EATING, rule);
 		precise_sleep(rule->time_to_eat, rule);
+		eats_counter(philo, rule);
 		pthread_mutex_unlock(&(rule->forks[philo->fork1]));
 		pthread_mutex_unlock(&(rule->forks[philo->fork2]));
 		prn_action(philo->id, SLEEPING, rule);
@@ -63,8 +78,16 @@ static void	monitor(t_rule *rule)
 				pthread_mutex_unlock(&rule->writing);
 				break ;
 			}
+			if (rule->must_eats > 0 && rule->finished_counter == rule->num)
+			{
+				pthread_mutex_lock(&rule->writing);
+				printf("%lld All philosophers ate at least %d.\n", getcurrent() - rule->start_time, rule->must_eats);
+				rule->died = 1;
+				pthread_mutex_unlock(&rule->writing);
+				break ;
+			}
 		}
-		usleep(50);
+		usleep(500);
 	}
 }
 

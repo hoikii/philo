@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/28 15:06:11 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/01 08:01:47 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	destroy_mutex(t_rule *rule)
 	}
 	pthread_mutex_unlock(&rule->writing);
 	pthread_mutex_destroy(&rule->writing);
+	pthread_mutex_destroy(&rule->finished_counter_mutex);
 	return ;
 }
 
@@ -41,6 +42,8 @@ static int	init_mutex(t_rule *rule)
 		if (pthread_mutex_init(&rule->forks[i], NULL) != 0)
 			return (FAIL);
 	}
+	if (pthread_mutex_init(&rule->finished_counter_mutex, NULL) != 0)
+		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -54,14 +57,8 @@ static void	init_philosophers(t_rule *rule)
 		rule->philo[i].id = i;
 		rule->philo[i].fork1 = i;
 		rule->philo[i].fork2 = (i + 1) % rule->num;
-/*
-		if (i == 0)
-		{
-			rule->philo[i].fork1 = (i + 1) % rule->num;
-			rule->philo[i].fork2 = i;
-		}
-*/
 		rule->philo[i].last_meal = rule->start_time;
+		rule->philo[i].eat_cnt = 0;
 		rule->philo[i].rule = rule;
 	}
 }

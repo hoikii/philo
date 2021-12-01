@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/28 19:39:26 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/01 08:00:01 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_philo {
 	int				fork1;
 	int				fork2;
 	long long		last_meal;
+	int				eat_cnt;
 	struct s_rule	*rule;
 }	t_philo;
 
@@ -56,6 +57,8 @@ typedef struct s_rule {
 	long long		start_time;
 	int				died;
 	pthread_mutex_t	writing;
+	int				finished_counter;
+	pthread_mutex_t	finished_counter_mutex;
 }	t_rule;
 
 int			init(t_rule *rule);
