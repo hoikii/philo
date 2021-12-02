@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/01 08:00:01 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/02 08:53:37 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ enum e_action_msg {
 	EATING,
 	SLEEPING,
 	THINKING,
-	DIED
+	DIED,
+	SIM_ENDED
 };
 
 typedef struct s_philo {

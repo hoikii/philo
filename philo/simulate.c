@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/01 08:02:59 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/02 09:23:54 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,12 @@ static void	monitor(t_rule *rule)
 			philo = rule->philo[i];
 			if (philo.last_meal + rule->time_to_die < getcurrent())
 			{
-				pthread_mutex_lock(&rule->writing);
-				printf("%lld %d %s\n", getcurrent() - rule->start_time, i + 1, "died");
-				rule->died = 1;
-				pthread_mutex_unlock(&rule->writing);
-				break ;
-			}
-			if (rule->must_eats > 0 && rule->finished_counter == rule->num)
-			{
-				pthread_mutex_lock(&rule->writing);
-				printf("%lld All philosophers ate at least %d.\n", getcurrent() - rule->start_time, rule->must_eats);
-				rule->died = 1;
-				pthread_mutex_unlock(&rule->writing);
+				prn_action(i, DIED, rule);
 				break ;
 			}
 		}
+		if (rule->must_eats > 0 && rule->finished_counter == rule->num)
+			prn_action(0, SIM_ENDED, rule);
 		usleep(500);
 	}
 }

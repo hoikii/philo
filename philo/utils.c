@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/11/28 19:44:20 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/02 09:34:21 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,27 @@ void	prn_action(int id, int action, t_rule *rule)
 	long long	current;
 
 	pthread_mutex_lock(&rule->writing);
-	if (rule->died && action != DIED)
-	{
-		pthread_mutex_unlock(&rule->writing);
-		return ;
-	}
 	current = getcurrent() - rule->start_time;
-	if (action == TAKE_FORK)
-		printf("%lld %d %s\n", current, id + 1, "has taken a fork");
+	if (rule->died)
+		;
+	else if (action == TAKE_FORK)
+		printf("%lld %d has taken a fork\n", current, id + 1);
 	else if (action == EATING)
-		printf("%lld %d %s\n", current, id + 1, "is eating");
+		printf("%lld %d is eating\n", current, id + 1);
 	else if (action == SLEEPING)
-		printf("%lld %d %s\n", current, id + 1, "is sleeping");
+		printf("%lld %d is sleeping\n", current, id + 1);
 	else if (action == THINKING)
-		printf("%lld %d %s\n", current, id + 1, "is thinking");
+		printf("%lld %d is thinking\n", current, id + 1);
+	else if (action == DIED || action == SIM_ENDED)
+	{
+		rule->died = 1;
+		if (action == DIED)
+			printf("%lld %d is died\n", current, id + 1);
+		else
+			printf("%lld All philosophers ate at least %d times.\n",
+				current, rule->must_eats);
+	}
 	pthread_mutex_unlock(&rule->writing);
-	/*
-	else if (action == DIED)
-		printf("%lld %d %s\n", current, id + 1, "died");
-		*/
 	return ;
 }
 
