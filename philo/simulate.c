@@ -6,16 +6,14 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/02 09:23:54 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/02 17:28:46 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
 #include <stdlib.h>
-#include "philo.h"
-
-#include <stdio.h>
 #include <unistd.h>
+#include "philo.h"
 
 static void	eats_counter(t_philo *philo, t_rule *rule)
 {
@@ -31,7 +29,7 @@ static void	eats_counter(t_philo *philo, t_rule *rule)
 	}
 }
 
-void	*philo(void *args)
+static void	*philo(void *args)
 {
 	t_philo	*philo;
 	t_rule	*rule;

@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:03:58 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/01 08:19:25 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/02 17:22:51 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	prn_error(int err)
 	return (FAIL);
 }
 
-int	chk_args(int ac, char **av, t_rule *rule)
+static int	chk_args(int ac, char **av, t_rule *rule)
 {
 	if (ac != 5 && ac != 6)
 		return (prn_error(WRONG_ARGS));

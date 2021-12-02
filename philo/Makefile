@@ -4,7 +4,7 @@ SRCS		= main.c init.c simulate.c utils.c
 OBJS		= $(SRCS:.c=.o)
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
-LDLIBS		= -lpthread
+LDLIBS		= -pthread
 RM			= rm -rf
 
 CCBLUE		= \033[34m
