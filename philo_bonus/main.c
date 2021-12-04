@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:03:58 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/04 10:55:47 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 10:58:10 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	prn_error(int err)
 {
 	if (err == WRONG_ARGS)
 	{
-		printf("philo num_philosophers time_to_die time_to_eat time_to_sleep ");
-		printf("[num_times_each_philosopher_must_eat]\n");
+		printf("philo_bonus num_philosophers time_to_die time_to_eat ");
+		printf("time_to_sleep [num_times_each_philosopher_must_eat]\n");
 	}
 	else if (err == NO_PHILO)
 		printf("There should be at least one philosopher\n");
