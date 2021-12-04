@@ -6,14 +6,14 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/02 08:53:37 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 15:23:41 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>
+# include <semaphore.h>
 
 # define FAIL 0
 # define SUCCESS 1
@@ -24,7 +24,7 @@ enum e_errmsgs {
 	NEGATIVE_ARGS,
 	INVALID_OPT_ARG,
 	MALLOC_FAIL,
-	MUTEX_INIT_FAIL,
+	SEM_INIT_FAIL,
 	THREAD_CREATE_FAIL
 };
 
@@ -53,17 +53,17 @@ typedef struct s_rule {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eats;
-	pthread_mutex_t	*forks;
+	sem_t			*forks;
 	t_philo			*philo;
 	long long		start_time;
 	int				died;
-	pthread_mutex_t	writing;
+	sem_t			*writing;
 	int				finished_counter;
-	pthread_mutex_t	finished_counter_mutex;
+	sem_t			*finished_counter_sem;
 }	t_rule;
 
 int			init(t_rule *rule);
-void		destroy_mutex(t_rule *rule);
+void		destroy_semaphore(t_rule *rule);
 int			simulate(t_rule *rule);
 int			prn_error(int err);
 

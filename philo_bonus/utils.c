@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/02 09:34:21 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 15:46:30 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	prn_action(int id, int action, t_rule *rule)
 {
 	long long	current;
 
-	pthread_mutex_lock(&rule->writing);
+	sem_wait(rule->writing);
 	current = getcurrent() - rule->start_time;
 	if (rule->died)
 		;
@@ -79,7 +79,7 @@ void	prn_action(int id, int action, t_rule *rule)
 			printf("%lld All philosophers ate at least %d times.\n",
 				current, rule->must_eats);
 	}
-	pthread_mutex_unlock(&rule->writing);
+	sem_post(rule->writing);
 	return ;
 }
 

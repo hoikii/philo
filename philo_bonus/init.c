@@ -6,43 +6,34 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/01 08:01:47 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 17:19:21 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include "philo.h"
 
-void	destroy_mutex(t_rule *rule)
+void	destroy_semaphore(t_rule *rule)
 {
-	int	i;
-
-	i = -1;
-	while (++i < rule->num)
-	{
-		pthread_mutex_unlock(&rule->forks[i]);
-		pthread_mutex_destroy(&rule->forks[i]);
-	}
-	pthread_mutex_unlock(&rule->writing);
-	pthread_mutex_destroy(&rule->writing);
-	pthread_mutex_destroy(&rule->finished_counter_mutex);
+	sem_close(rule->writing);
+	sem_close(rule->forks);
+	sem_close(rule->finished_counter_sem);
+	sem_unlink("/philo_writing");
+	sem_unlink("/philo_forks");
+	sem_unlink("/philo_finished_counter_sem");
 	return ;
 }
 
-static int	init_mutex(t_rule *rule)
+static int	init_semaphore(t_rule *rule)
 {
-	int	i;
-
-	if (pthread_mutex_init(&rule->writing, NULL) != 0)
-		return (FAIL);
-	i = -1;
-	while (++i < rule->num)
-	{
-		if (pthread_mutex_init(&rule->forks[i], NULL) != 0)
-			return (FAIL);
-	}
-	if (pthread_mutex_init(&rule->finished_counter_mutex, NULL) != 0)
+	rule->writing = sem_open("/philo_writing", O_CREAT, S_IRWXU, 1);
+	rule->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, rule->num);
+	rule->finished_counter_sem = sem_open("/philo_finished_counter_sem",
+		O_CREAT, S_IRWXU, 1);
+	if (!rule->writing || !rule->forks || !rule->finished_counter_sem)
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -66,13 +57,12 @@ static void	init_philosophers(t_rule *rule)
 int	init(t_rule *rule)
 {
 	rule->philo = malloc(sizeof(t_philo) * rule->num);
-	rule->forks = malloc(sizeof(pthread_mutex_t) * rule->num);
-	if (!rule->philo || !rule->forks)
+	if (!rule->philo)
 		return (prn_error(MALLOC_FAIL));
-	if (init_mutex(rule) == FAIL)
+	if (init_semaphore(rule) == FAIL)
 	{
-		destroy_mutex(rule);
-		return (prn_error(MUTEX_INIT_FAIL));
+		destroy_semaphore(rule);
+		return (prn_error(SEM_INIT_FAIL));
 	}
 	rule->start_time = getcurrent();
 	rule->died = 0;

@@ -6,11 +6,12 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/02 17:28:46 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 17:18:11 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "philo.h"
@@ -22,9 +23,9 @@ static void	eats_counter(t_philo *philo, t_rule *rule)
 		philo->eat_cnt++;
 		if (philo->eat_cnt >= rule->must_eats)
 		{
-			pthread_mutex_lock(&rule->finished_counter_mutex);
+			sem_wait(rule->finished_counter_sem);
 			rule->finished_counter++;
-			pthread_mutex_unlock(&rule->finished_counter_mutex);
+			sem_post(rule->finished_counter_sem);
 		}
 	}
 }
@@ -40,16 +41,16 @@ static void	*philo(void *args)
 	{
 		if (philo->id % 2)
 			usleep(1000);
-		pthread_mutex_lock(&rule->forks[philo->fork1]);
+		sem_wait(rule->forks);
 		prn_action(philo->id, TAKE_FORK, rule);
-		pthread_mutex_lock(&rule->forks[philo->fork2]);
+		sem_wait(rule->forks);
 		prn_action(philo->id, TAKE_FORK, rule);
 		philo->last_meal = getcurrent();
 		prn_action(philo->id, EATING, rule);
 		precise_sleep(rule->time_to_eat, rule);
 		eats_counter(philo, rule);
-		pthread_mutex_unlock(&(rule->forks[philo->fork1]));
-		pthread_mutex_unlock(&(rule->forks[philo->fork2]));
+		sem_post(rule->forks);
+		sem_post(rule->forks);
 		prn_action(philo->id, SLEEPING, rule);
 		precise_sleep(rule->time_to_sleep, rule);
 		prn_action(philo->id, THINKING, rule);
@@ -84,12 +85,12 @@ static void	stop_simulation(t_rule *rule)
 {
 	int	i;
 
-	destroy_mutex(rule);
+	sem_post(rule->forks);
 	i = -1;
 	while (++i < rule->num)
 		pthread_join(rule->philo[i].tid, NULL);
+	destroy_semaphore(rule);
 	free(rule->philo);
-	free(rule->forks);
 }
 
 int	simulate(t_rule *rule)

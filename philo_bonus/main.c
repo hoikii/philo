@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:03:58 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/04 10:58:10 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 15:13:30 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	prn_error(int err)
 		printf("Invalid optional argument\n");
 	else if (err == MALLOC_FAIL)
 		printf("Error while memory allocation\n");
-	else if (err == MUTEX_INIT_FAIL)
-		printf("Error while initializing mutex\n");
+	else if (err == SEM_INIT_FAIL)
+		printf("Error while initializing semaphore\n");
 	else if (err == THREAD_CREATE_FAIL)
 		printf("Error while creating thread\n");
 	return (FAIL);
@@ -72,8 +72,6 @@ int	main(int ac, char **av)
 	{
 		if (rule.philo)
 			free(rule.philo);
-		if (rule.forks)
-			free(rule.forks);
 		return (1);
 	}
 	if (simulate(&rule) == FAIL)
