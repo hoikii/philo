@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/05 18:31:04 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:40:48 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*monitor_each(void *arg)
 
 	philo = (t_philo *)arg;
 	rule = philo->rule;
-	while (!rule->died)
+	while (1)
 	{
 		if (philo->last_meal + rule->time_to_die < getcurrent())
 		{

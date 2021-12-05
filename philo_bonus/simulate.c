@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/05 18:32:22 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:42:44 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	philo(t_philo *philo)
 		precise_sleep(rule->time_to_sleep, rule);
 		prn_action(philo->id, THINKING, rule);
 	}
+	exit(0);
 }
 
 static void	stop_simulation(t_rule *rule)

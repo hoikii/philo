@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/05 17:49:30 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:41:38 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	destroy_semaphore(t_rule *rule)
 	sem_close(rule->writing);
 	sem_close(rule->forks);
 	sem_close(rule->finished_counter);
+	sem_close(rule->someone_dead);
 	sem_unlink("/philo_writing");
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_finished_counter");
