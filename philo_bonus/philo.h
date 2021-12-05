@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/05 17:47:05 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:23:12 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int			init(t_rule *rule);
 void		destroy_semaphore(t_rule *rule);
 int			simulate(t_rule *rule);
 int			prn_error(int err);
+
+void		*monitor_all_ate(void *arg);
+void		*monitor_each(void *arg);
 
 int			ft_atoi(const char *str);
 long long	getcurrent(void);

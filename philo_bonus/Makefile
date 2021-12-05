@@ -1,6 +1,6 @@
 NAME		= philo_bonus
 HEADER		= philo.h
-SRCS		= main.c init.c simulate.c utils.c
+SRCS		= main.c init.c simulate.c utils.c monitor.c
 OBJS		= $(SRCS:.c=.o)
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror

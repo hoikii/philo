@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/05 18:05:43 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:21:00 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ void	prn_action(int id, int action, t_rule *rule)
 
 	sem_wait(rule->writing);
 	current = getcurrent() - rule->start_time;
-	if (rule->died)
-		;
-	else if (action == TAKE_FORK)
+	if (action == TAKE_FORK)
 		printf("%lld %d has taken a fork\n", current, id + 1);
 	else if (action == EATING)
 		printf("%lld %d is eating\n", current, id + 1);
@@ -72,7 +70,6 @@ void	prn_action(int id, int action, t_rule *rule)
 		printf("%lld %d is thinking\n", current, id + 1);
 	else if (action == DIED || action == SIM_ENDED)
 	{
-		rule->died = 1;
 		if (action == DIED)
 			printf("%lld %d is died\n", current, id + 1);
 		else
