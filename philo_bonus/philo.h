@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:28:03 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/04 15:23:41 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 17:47:05 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ enum e_errmsgs {
 	INVALID_OPT_ARG,
 	MALLOC_FAIL,
 	SEM_INIT_FAIL,
-	THREAD_CREATE_FAIL
+	THREAD_CREATE_FAIL,
+	PROCESS_FORK_FAIL
 };
 
 enum e_action_msg {
@@ -38,10 +39,9 @@ enum e_action_msg {
 };
 
 typedef struct s_philo {
+	pid_t			pid;
 	pthread_t		tid;
 	int				id;
-	int				fork1;
-	int				fork2;
 	long long		last_meal;
 	int				eat_cnt;
 	struct s_rule	*rule;
@@ -58,8 +58,8 @@ typedef struct s_rule {
 	long long		start_time;
 	int				died;
 	sem_t			*writing;
-	int				finished_counter;
-	sem_t			*finished_counter_sem;
+	sem_t			*finished_counter;
+	sem_t			*someone_dead;
 }	t_rule;
 
 int			init(t_rule *rule);

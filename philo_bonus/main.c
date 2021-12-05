@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:03:58 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/04 15:13:30 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/04 18:23:42 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	prn_error(int err)
 		printf("Error while initializing semaphore\n");
 	else if (err == THREAD_CREATE_FAIL)
 		printf("Error while creating thread\n");
+	else if (err == PROCESS_FORK_FAIL)
+		printf("Error while creating new process\n");
 	return (FAIL);
 }
 

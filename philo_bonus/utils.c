@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:44:57 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/04 15:46:30 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:05:43 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	prn_action(int id, int action, t_rule *rule)
 		else
 			printf("%lld All philosophers ate at least %d times.\n",
 				current, rule->must_eats);
+		return ;
 	}
 	sem_post(rule->writing);
 	return ;
