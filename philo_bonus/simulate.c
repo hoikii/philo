@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/05 18:42:44 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/30 20:21:40 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <semaphore.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "philo.h"
 
 static void	eat(t_philo *philo, t_rule *rule)
@@ -63,6 +64,7 @@ static void	philo(t_philo *philo)
 static void	stop_simulation(t_rule *rule)
 {
 	int	i;
+	int	wstatus;
 
 	i = -1;
 	while (++i < rule->num)
@@ -71,6 +73,9 @@ static void	stop_simulation(t_rule *rule)
 			kill(rule->philo[i].pid, SIGTERM);
 		sem_post(rule->finished_counter);
 	}
+	i = -1;
+	while (++i < rule->num)
+		waitpid(rule->philo[i].pid, &wstatus, 0);
 	destroy_semaphore(rule);
 	free(rule->philo);
 }
