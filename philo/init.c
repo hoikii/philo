@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/01 08:01:47 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/31 15:38:12 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,16 @@ static void	init_philosophers(t_rule *rule)
 	while (++i < rule->num)
 	{
 		rule->philo[i].id = i;
-		rule->philo[i].fork1 = i;
-		rule->philo[i].fork2 = (i + 1) % rule->num;
+		if (i % 2)
+		{
+			rule->philo[i].fork1 = i;
+			rule->philo[i].fork2 = (i + 1) % rule->num;
+		}
+		else
+		{
+			rule->philo[i].fork1 = (i + 1) % rule->num;
+			rule->philo[i].fork2 = i;
+		}
 		rule->philo[i].last_meal = rule->start_time;
 		rule->philo[i].eat_cnt = 0;
 		rule->philo[i].rule = rule;

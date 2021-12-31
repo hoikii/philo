@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/30 20:21:40 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/31 15:42:04 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static void	philo(t_philo *philo)
 	pthread_detach(philo->tid);
 	while (1)
 	{
-		if (philo->id % 2)
-			usleep(1000);
 		eat(philo, rule);
 		sem_post(rule->forks);
 		sem_post(rule->forks);

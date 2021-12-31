@@ -6,7 +6,7 @@
 /*   By: kanlee <kanlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 16:45:18 by kanlee            #+#    #+#             */
-/*   Updated: 2021/12/02 17:28:46 by kanlee           ###   ########.fr       */
+/*   Updated: 2021/12/31 15:38:24 by kanlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static void	*philo(void *args)
 	rule = philo->rule;
 	while (!rule->died)
 	{
-		if (philo->id % 2)
-			usleep(1000);
 		pthread_mutex_lock(&rule->forks[philo->fork1]);
 		prn_action(philo->id, TAKE_FORK, rule);
 		pthread_mutex_lock(&rule->forks[philo->fork2]);
